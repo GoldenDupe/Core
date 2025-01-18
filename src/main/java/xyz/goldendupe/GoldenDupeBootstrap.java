@@ -78,6 +78,7 @@ public class GoldenDupeBootstrap implements PluginBootstrap {
 			messenger.setLocale(Locale.US);
 			messenger.setDefaultLocale(englishSource);
 			messenger.registerLanguageTable(Locale.US, englishTable);
+			messenger.setSendTranslationKey(true);
 			messenger.setUseReceiverLocale(false);
 			messenger.setSendASync(true);
 			messenger.setPrefix(prefix);
