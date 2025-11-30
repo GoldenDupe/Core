@@ -19,7 +19,6 @@ import org.incendo.cloud.parser.standard.IntegerParser;
 import org.incendo.cloud.parser.standard.StringParser;
 import org.incendo.cloud.suggestion.Suggestion;
 import org.incendo.cloud.suggestion.SuggestionProvider;
-import xyz.goldendupe.GoldenDupeBootstrap;
 import xyz.goldendupe.GoldenDupeCommandRegister;
 import xyz.goldendupe.command.cloud.GDCloudCommand;
 import xyz.goldendupe.messenger.Translations;
@@ -94,7 +93,9 @@ public class LoopCommand extends GDCloudCommand {
 											return;
 										}
 
-										sender.chat(executing);
+										sender.getScheduler().run(goldenDupe(), (t)->{
+											sender.chat(executing);
+										}, null);
 										timesExecuted.getAndIncrement();
 									},
 									0,

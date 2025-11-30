@@ -98,7 +98,8 @@ public class GoldenDupeBootstrap implements PluginBootstrap {
 		commandRegister = new GoldenDupeCommandRegister(messenger, bootstrapContext, this);
 		commandRegister.getCommandManager().suggestionProcessor(new FilteringSuggestionProcessor<>());
 		AudienceProvider<CommandSender> senderAudienceProvider = (sender)->sender;
-		MinecraftExceptionHandler.create(senderAudienceProvider).decorator(prefix::append).registerTo(commandRegister.getCommandManager());
+		MinecraftExceptionHandler.create(senderAudienceProvider)
+				.decorator(component -> prefix.append(component)).registerTo(commandRegister.getCommandManager());
 		/*
 		MinecraftExceptionHandler.create(senderAudienceProvider).decorator(t->getComponent(Translations.COMMAND_MANAGER_INVALID_SYNTAX, Placeholder.of("value", t))).defaultInvalidSyntaxHandler().registerTo(commandRegister.getCommandManager());
 		MinecraftExceptionHandler.create(senderAudienceProvider).decorator(t->getComponent(Translations.COMMAND_MANAGER_INVALID_SENDER, Placeholder.of("value", t))).defaultInvalidSenderHandler().registerTo(commandRegister.getCommandManager());

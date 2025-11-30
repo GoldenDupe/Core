@@ -54,6 +54,7 @@ public class CommandSpyCommand extends GDCloudCommand {
 						messenger.message(player, Translations.COMMAND_SPY_TOGGLE_FALSE);
 					}
 					user.setCommandSpyToggled(isToggled);
+					goldenDupe().commandSpyDatabase().requestSave(user);
 				})
 		);
 		commandManager.command(spyCommand
@@ -89,6 +90,7 @@ public class CommandSpyCommand extends GDCloudCommand {
 							}
 							messenger.message(player, Translations.COMMAND_SPY_PLAYER_BLOCKED, Placeholder.of("player", who.name()));
 							user.blockedUsers().add(who.getUniqueId());
+							goldenDupe().commandSpyDatabase().requestSave(user);
 						}));
 		commandManager.command(spyCommand
 				.literal("unblock-player")
@@ -123,6 +125,7 @@ public class CommandSpyCommand extends GDCloudCommand {
 							}
 							messenger.message(player, Translations.COMMAND_SPY_PLAYER_UNBLOCKED, Placeholder.of("player", who.name()));
 							user.blockedUsers().add(who.getUniqueId());
+							goldenDupe().commandSpyDatabase().requestSave(user);
 						}));
 
 
@@ -165,6 +168,7 @@ public class CommandSpyCommand extends GDCloudCommand {
 							}
 							messenger.message(player, Translations.COMMAND_SPY_COMMAND_BLOCKED, Placeholder.of("command", command));
 							user.blockedCommands().remove(command);
+							goldenDupe().commandSpyDatabase().requestSave(user);
 						}));
 
 		commandManager.command(spyCommand
@@ -205,6 +209,7 @@ public class CommandSpyCommand extends GDCloudCommand {
 							}
 							messenger.message(player, Translations.COMMAND_SPY_COMMAND_UNBLOCKED, Placeholder.of("command", command));
 							user.blockedCommands().remove(command);
+							goldenDupe().commandSpyDatabase().requestSave(user);
 						}));
 
 	}

@@ -1,6 +1,7 @@
 package xyz.goldendupe.datagen.defaults;
 
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import xyz.goldendupe.GoldenDupe;
 import xyz.goldendupe.models.GDSettings;
@@ -27,113 +28,31 @@ public class SettingsDefault extends GDSettings {
 		materials.add(Material.SPLASH_POTION);
 		materials.add(Material.LINGERING_POTION);
 		materials.add(Material.CHORUS_FRUIT);
+		materials.add(Material.WIND_CHARGE);
+		materials.add(Material.END_CRYSTAL);
+		materials.add(Material.RESPAWN_ANCHOR);
 		return materials;
 	}
 
 	@Override
 	public Set<Material> getIllegalDupe() {
 		Set<Material> materials = new HashSet<>();
-		materials.add(Material.BEDROCK);
-		materials.add(Material.BARRIER);
-		materials.add(Material.STRUCTURE_VOID);
-		materials.add(Material.STRUCTURE_BLOCK);
-		materials.add(Material.REINFORCED_DEEPSLATE);
-		materials.add(Material.COMMAND_BLOCK);
-		materials.add(Material.CHAIN_COMMAND_BLOCK);
-		materials.add(Material.REPEATING_COMMAND_BLOCK);
-		materials.add(Material.END_PORTAL_FRAME);
 		materials.add(Material.LIGHT);
 		materials.add(Material.DRAGON_EGG);
 		materials.add(Material.SPAWNER);
 		materials.add(Material.TRIAL_SPAWNER);
 		materials.add(Material.VAULT);
-		materials.add(Material.COMMAND_BLOCK_MINECART);
 
-		materials.add(Material.PLAYER_HEAD);
-		materials.add(Material.ZOMBIE_HEAD);
-		materials.add(Material.CREEPER_HEAD);
-		materials.add(Material.PIGLIN_HEAD);
-		materials.add(Material.DRAGON_HEAD);
 		materials.add(Material.WITHER_SKELETON_SKULL);
 		materials.add(Material.SKELETON_SKULL);
-		materials.add(Material.ALLAY_SPAWN_EGG);
-		materials.add(Material.AXOLOTL_SPAWN_EGG);
-		materials.add(Material.BAT_SPAWN_EGG);
-		materials.add(Material.BEE_SPAWN_EGG);
-		materials.add(Material.BLAZE_SPAWN_EGG);
-		materials.add(Material.BREEZE_SPAWN_EGG);
-		materials.add(Material.BOGGED_SPAWN_EGG);
-		materials.add(Material.CAT_SPAWN_EGG);
-		materials.add(Material.CAMEL_SPAWN_EGG);
-		materials.add(Material.CAVE_SPIDER_SPAWN_EGG);
-		materials.add(Material.CHICKEN_SPAWN_EGG);
-		materials.add(Material.COD_SPAWN_EGG);
-		materials.add(Material.COW_SPAWN_EGG);
-		materials.add(Material.CREEPER_SPAWN_EGG);
-		materials.add(Material.DOLPHIN_SPAWN_EGG);
-		materials.add(Material.DROWNED_SPAWN_EGG);
-		materials.add(Material.ELDER_GUARDIAN_SPAWN_EGG);
-		materials.add(Material.ENDER_DRAGON_SPAWN_EGG);
-		materials.add(Material.ENDERMAN_SPAWN_EGG);
-		materials.add(Material.ENDERMITE_SPAWN_EGG);
-		materials.add(Material.EVOKER_SPAWN_EGG);
-		materials.add(Material.FOX_SPAWN_EGG);
-		materials.add(Material.FROG_SPAWN_EGG);
-		materials.add(Material.GHAST_SPAWN_EGG);
-		materials.add(Material.GLOW_SQUID_SPAWN_EGG);
-		materials.add(Material.GOAT_SPAWN_EGG);
-		materials.add(Material.GUARDIAN_SPAWN_EGG);
-		materials.add(Material.HOGLIN_SPAWN_EGG);
-		materials.add(Material.HORSE_SPAWN_EGG);
-		materials.add(Material.HUSK_SPAWN_EGG);
-		materials.add(Material.IRON_GOLEM_SPAWN_EGG);
-		materials.add(Material.LLAMA_SPAWN_EGG);
-		materials.add(Material.MAGMA_CUBE_SPAWN_EGG);
-		materials.add(Material.MOOSHROOM_SPAWN_EGG);
-		materials.add(Material.MULE_SPAWN_EGG);
-		materials.add(Material.OCELOT_SPAWN_EGG);
-		materials.add(Material.PANDA_SPAWN_EGG);
-		materials.add(Material.PARROT_SPAWN_EGG);
-		materials.add(Material.PHANTOM_SPAWN_EGG);
-		materials.add(Material.PIG_SPAWN_EGG);
-		materials.add(Material.PIGLIN_SPAWN_EGG);
-		materials.add(Material.PIGLIN_BRUTE_SPAWN_EGG);
-		materials.add(Material.PILLAGER_SPAWN_EGG);
-		materials.add(Material.POLAR_BEAR_SPAWN_EGG);
-		materials.add(Material.PUFFERFISH_SPAWN_EGG);
-		materials.add(Material.RABBIT_SPAWN_EGG);
-		materials.add(Material.RAVAGER_SPAWN_EGG);
-		materials.add(Material.SALMON_SPAWN_EGG);
-		materials.add(Material.SHEEP_SPAWN_EGG);
-		materials.add(Material.SHULKER_SPAWN_EGG);
-		materials.add(Material.SILVERFISH_SPAWN_EGG);
-		materials.add(Material.SKELETON_SPAWN_EGG);
-		materials.add(Material.SKELETON_HORSE_SPAWN_EGG);
-		materials.add(Material.SLIME_SPAWN_EGG);
-		materials.add(Material.SNIFFER_SPAWN_EGG);
-		materials.add(Material.SNOW_GOLEM_SPAWN_EGG);
-		materials.add(Material.SPIDER_SPAWN_EGG);
-		materials.add(Material.SQUID_SPAWN_EGG);
-		materials.add(Material.STRAY_SPAWN_EGG);
-		materials.add(Material.STRIDER_SPAWN_EGG);
-		materials.add(Material.TADPOLE_SPAWN_EGG);
-		materials.add(Material.TRADER_LLAMA_SPAWN_EGG);
-		materials.add(Material.TROPICAL_FISH_SPAWN_EGG);
-		materials.add(Material.TURTLE_SPAWN_EGG);
-		materials.add(Material.VEX_SPAWN_EGG);
-		materials.add(Material.VILLAGER_SPAWN_EGG);
-		materials.add(Material.VINDICATOR_SPAWN_EGG);
-		materials.add(Material.WANDERING_TRADER_SPAWN_EGG);
-		materials.add(Material.WARDEN_SPAWN_EGG);
-		materials.add(Material.WITCH_SPAWN_EGG);
-		materials.add(Material.WITHER_SPAWN_EGG);
-		materials.add(Material.WITHER_SKELETON_SPAWN_EGG);
-		materials.add(Material.WOLF_SPAWN_EGG);
-		materials.add(Material.ZOGLIN_SPAWN_EGG);
-		materials.add(Material.ZOMBIE_SPAWN_EGG);
-		materials.add(Material.ZOMBIE_HORSE_SPAWN_EGG);
-		materials.add(Material.ZOMBIE_VILLAGER_SPAWN_EGG);
-		materials.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
+
+		Registry.MATERIAL.forEach(item->{
+			if (item.getKey().getKey().contains("_spawn_egg")) {
+				materials.add(item);
+			} else if (item.getKey().getKey().contains("_head")) {
+				materials.add(item);
+			}
+		});
 		return materials;
 	}
 
@@ -141,6 +60,7 @@ public class SettingsDefault extends GDSettings {
 	public Set<Material> getIllegalPlacements() {
 		Set<Material> materials = new HashSet<>();
 		materials.add(Material.BEDROCK);
+		materials.add(Material.JIGSAW);
 		materials.add(Material.BARRIER);
 		materials.add(Material.STRUCTURE_VOID);
 		materials.add(Material.STRUCTURE_BLOCK);
@@ -160,15 +80,83 @@ public class SettingsDefault extends GDSettings {
 	public Set<Material> getIllegalBlocksMenu() {
 		Set<Material> materials = new HashSet<>(getIllegalPlacements());
 		materials.add(Material.SPAWNER);
+		materials.add(Material.BUDDING_AMETHYST);
+
+		materials.add(Material.SUSPICIOUS_GRAVEL);
+		materials.add(Material.SUSPICIOUS_SAND);
+
 		materials.add(Material.DIAMOND_BLOCK);
-		materials.add(Material.DIAMOND_ORE);
-		materials.add(Material.DEEPSLATE_DIAMOND_ORE);
 		materials.add(Material.NETHERITE_BLOCK);
+		materials.add(Material.COAL_ORE);
+		materials.add(Material.RAW_IRON_BLOCK);
+		materials.add(Material.RAW_COPPER_BLOCK);
+		materials.add(Material.RAW_GOLD_BLOCK);
+		materials.add(Material.IRON_BLOCK);
+		materials.add(Material.GOLD_BLOCK);
+		materials.add(Material.EMERALD_BLOCK);
+
+		Registry.MATERIAL.forEach(item->{
+			if (item.getKey().getKey().contains("_ore")) {
+				materials.add(item);
+			} else if (item.getKey().getKey().contains("anvil")) {
+				materials.add(item);
+			} else if (item.getKey().getKey().contains("shulker_box")) {
+				materials.add(item);
+			} else if (item.getKey().getKey().contains("_spawn_egg")) {
+				materials.add(item);
+			} else if (item.getKey().getKey().contains("_head")) {
+				materials.add(item);
+			}
+
+		});
+		materials.add(Material.WITHER_SKELETON_SKULL);
+		materials.add(Material.SKELETON_SKULL);
+
+		Registry.MATERIAL.forEach(item->{
+		});
 		materials.add(Material.ANCIENT_DEBRIS);
 		materials.add(Material.ENCHANTING_TABLE);
 		materials.add(Material.BOOKSHELF);
 		materials.add(Material.TURTLE_EGG);
 		materials.add(Material.SNIFFER_EGG);
+
+		materials.add(Material.CHEST);
+		materials.add(Material.CRAFTING_TABLE);
+		materials.add(Material.FURNACE);
+		materials.add(Material.JUKEBOX);
+		materials.add(Material.SCULK_SHRIEKER);
+		materials.add(Material.ENDER_CHEST);
+
+		materials.add(Material.BEACON);
+		materials.add(Material.CONDUIT);
+
+		materials.add(Material.TRAPPED_CHEST);
+		materials.add(Material.SLIME_BLOCK);
+		materials.add(Material.HONEY_BLOCK);
+		materials.add(Material.STICKY_PISTON);
+		materials.add(Material.PISTON);
+		materials.add(Material.REDSTONE_BLOCK);
+		materials.add(Material.REDSTONE);
+		materials.add(Material.REPEATER);
+		materials.add(Material.COMPARATOR);
+		materials.add(Material.DROPPER);
+		materials.add(Material.DISPENSER);
+		materials.add(Material.OBSERVER);
+		materials.add(Material.TNT);
+
+		materials.add(Material.NETHER_WART);
+		materials.add(Material.BREWING_STAND);
+		materials.add(Material.BARREL);
+		materials.add(Material.SMOKER);
+		materials.add(Material.BLAST_FURNACE);
+		materials.add(Material.GRINDSTONE);
+		materials.add(Material.SMITHING_TABLE);
+		materials.add(Material.STONECUTTER);
+		materials.add(Material.BELL);
+
+		materials.add(Material.OBSIDIAN);
+		materials.add(Material.CRYING_OBSIDIAN);
+		materials.add(Material.RESPAWN_ANCHOR);
 		return materials;
 	}
 

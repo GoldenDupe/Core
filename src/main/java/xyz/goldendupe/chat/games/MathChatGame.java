@@ -4,8 +4,7 @@ import bet.astral.chatgamecore.dispatcher.ChatEventDispatcher;
 import bet.astral.chatgamecore.game.Create;
 import bet.astral.chatgamecore.game.GameData;
 import bet.astral.chatgamecore.game.RunData;
-import bet.astral.chatgamecore.game.builtin.math.HardMathArguments;
-import bet.astral.chatgamecore.game.builtin.math.SimpleMathArguments;
+import bet.astral.chatgamecore.game.builtin.math.MathArguments;
 import bet.astral.messenger.v2.Messenger;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -92,30 +91,30 @@ public class MathChatGame extends bet.astral.chatgamecore.game.builtin.math.Math
             return parentheses(variables, random);
         } else if (random.nextDouble()>0.99){
             if (variables.isEmpty()){
-                return HardMathArguments.assignValue(variables, random, -50, 50, ValueType.VARIABLE);
+                return MathArguments.assignValue(variables, random, -50, 50, ValueType.VARIABLE, true);
             }
             return valueOrElse(variables, random, MathChatGame::randomVariable, MathChatGame::valueThird);
         } else {
-            return SimpleMathArguments.assignBase(random);
+            return MathArguments.createMathEquation(random, true);
         }
     }
     public static Object valueThird(List<Variable> variables, Random random){
-        return HardMathArguments.assignSimpleValue(random);
+        return MathArguments.createMathEquation(random);
     }
     public static Object valueFirst(List<Variable> variables, Random random){
         if (random.nextDouble()>0.95){
-            return HardMathArguments.assignValue(variables, random, -313, -323, ValueType.PARENTHESES);
+            return MathArguments.assignValue(variables, random, -313, -323, ValueType.PARENTHESES, true);
         } else if (random.nextDouble()>0.95) {
             return new Parentheses(random, parentheses(variables, random), MathEquationType.randomSimple(random), parentheses(variables, random));
         } else if (random.nextDouble() > 0.8) {
             return parentheses(variables, random);
         } else if (random.nextDouble()>0.7){
             if (variables.isEmpty()){
-                return HardMathArguments.assignValue(variables, random, -323, 323, ValueType.VARIABLE);
+                return MathArguments.assignValue(variables, random, -323, 323, ValueType.VARIABLE, true);
             }
             return valueOrElse(variables, random, MathChatGame::randomVariable, MathChatGame::valueThird);
         } else {
-            return SimpleMathArguments.assignBase(random);
+            return MathArguments.createMathEquation(random, true);
         }
     }
 
