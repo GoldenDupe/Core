@@ -9,15 +9,17 @@ import java.util.List;
 
 public interface Generate {
 	Gson getGson();
-	default void write(@NotNull JsonObject json, File file){
+	default void write(@NotNull JsonObject json, File file) {
 		try {
-			FileReader reader = new FileReader(file);
-			JsonElement element = getGson().fromJson(reader, JsonElement.class);
-			JsonObject current;
-			if (element instanceof JsonNull || element == null){
-				current = null;
-			} else {
-				current = getGson().fromJson(reader, JsonObject.class);
+			file = getOrCreate(file);
+
+			JsonObject current = null;
+
+			try (FileReader reader = new FileReader(file)) {
+				JsonElement element = JsonParser.parseReader(reader);
+				if (element != null && element.isJsonObject()) {
+					current = element.getAsJsonObject();
+				}
 			}
 
 			if (current != null) {
@@ -26,44 +28,41 @@ public interface Generate {
 				current = json;
 			}
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(getGson().toJson(current));
-			writer.flush();
-			writer.close();
-			reader.close();
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+				writer.write(getGson().toJson(current));
+			}
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	default void write(@NotNull JsonArray json, File file){
+
+	default void write(@NotNull JsonArray json, File file) {
 		try {
-			FileReader reader = new FileReader(file);
-			JsonElement element = getGson().fromJson(reader, JsonElement.class);
-			JsonArray current;
-			if (element instanceof JsonNull || element == null){
-				current = null;
-			} else {
-				current = getGson().fromJson(reader, JsonArray.class);
-			}
+			file = getOrCreate(file);
 
-			if (current != null) {
-				if (!current.isEmpty()){
-					reader.close();
-					return;
+			JsonArray current = null;
+
+			try (FileReader reader = new FileReader(file)) {
+				JsonElement element = JsonParser.parseReader(reader);
+				if (element != null && element.isJsonArray()) {
+					current = element.getAsJsonArray();
 				}
-			} else {
-				current = json;
 			}
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(getGson().toJson(current));
-			writer.flush();
-			writer.close();
-			reader.close();
+			if (current != null && !current.isEmpty()) {
+				return;
+			}
+
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+				writer.write(getGson().toJson(json));
+			}
+
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
+
 	default JsonObject checkUntilJsonEnd(@Nullable JsonObject json, JsonObject saving){
 		if (json==null){
 			return null;

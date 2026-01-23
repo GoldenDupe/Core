@@ -11,27 +11,5 @@ import org.jetbrains.annotations.NotNull;
 public class GoldenDupeLoader implements PluginLoader {
 	@Override
 	public void classloader(@NotNull PluginClasspathBuilder pluginClasspathBuilder) {
-
-		MavenLibraryResolver resolver = new MavenLibraryResolver();
-		// Maven Central
-		resolver.addRepository(new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2/").build());
-
-
-		// Cloud
-		String cloudCore = "2.0.0";
-		resolver.addDependency(new Dependency(new DefaultArtifact("org.incendo:cloud-core:"+cloudCore), null));
-		String cloudFramework = "2.0.0-beta.10";
-		resolver.addDependency(new Dependency(new DefaultArtifact("org.incendo:cloud-paper:"+cloudFramework), null));
-		resolver.addDependency(new Dependency(new DefaultArtifact("org.incendo:cloud-brigadier:"+cloudFramework), null));
-		resolver.addDependency(new Dependency(new DefaultArtifact("org.incendo:cloud-minecraft-extras:"+cloudFramework), null));
-		pluginClasspathBuilder.addLibrary(resolver);
-
-
-		// Classgraph for reflections
-		resolver.addDependency(new Dependency(new DefaultArtifact("io.github.classgraph:classgraph:4.8.165"), null));
-
-		// Database stuff (mysql)
-		resolver.addDependency(new Dependency(new DefaultArtifact("com.zaxxer:HikariCP:5.1.0"), null));
-		pluginClasspathBuilder.addLibrary(resolver);
 	}
 }

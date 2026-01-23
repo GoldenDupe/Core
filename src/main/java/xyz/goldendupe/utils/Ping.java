@@ -11,12 +11,12 @@ public class Ping {
 			Triplet.immutable(7D, 10D, NamedTextColor.RED),
 			Triplet.immutable(10D, 14.0D, NamedTextColor.YELLOW),
 			Triplet.immutable(14.0D, 17.0D, NamedTextColor.GREEN),
-			NamedTextColor.DARK_GREEN,
+			NamedTextColor.GREEN,
 			false
 	);
 	public static Ping defaultPing = new Ping(
 			Component.text("Loading...", NamedTextColor.RED),
-			Triplet.immutable(0D, 75D, NamedTextColor.DARK_GREEN),
+			Triplet.immutable(0D, 75D, NamedTextColor.GREEN),
 			Triplet.immutable(76D, 110D, NamedTextColor.GREEN),
 			Triplet.immutable(111D, 160D, NamedTextColor.YELLOW),
 			Triplet.immutable(161D, 220D, NamedTextColor.RED),

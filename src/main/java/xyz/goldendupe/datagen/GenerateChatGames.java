@@ -2,7 +2,6 @@ package xyz.goldendupe.datagen;
 
 import bet.astral.chatgamecore.game.builtin.true_or_false.TrueOrFalseChatGame;
 import bet.astral.chatgamecore.messenger.GameTranslations;
-import bet.astral.messenger.v2.translation.serializer.gson.TranslationGsonHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -20,13 +19,15 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
+import static bet.astral.messenger.v2.translation.serializer.gson.TranslationGsonHelper.getDefaults;
+
 public class GenerateChatGames implements Generate {
     public Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping()
             .registerTypeAdapter(TrueOrFalseChatGame.Statement.class, new TrueOrFalseChatGame.StatementSerializer())
             .create();
     public void generate(@NotNull File folder) throws IOException {
         // Translations
-        write(translations(GameTranslations.class),          getOrCreate(new File(folder, "root.json")));
+        write(translations(GameTranslations.class),          getOrCreate(new File(folder, "root-translations.json")));
         write(translations(TrueOrFalseTranslations.class),   getOrCreate(new File(folder, "true-or-false-translations.json")));
         write(translations(CopyFastestTranslations.class),   getOrCreate(new File(folder, "type-fastest-translations.json")));
         write(translations(UnscrambleTranslations.class),    getOrCreate(new File(folder, "unscramble-translations.json")));
@@ -36,8 +37,8 @@ public class GenerateChatGames implements Generate {
         write(asArray(createStrings(CopyFastestTranslations.class, "CF"), gson),  getOrCreate(new File(folder, "type-fastest-values.json")));
         write(asArray(createStrings(UnscrambleTranslations.class, "U"), gson),    getOrCreate(new File(folder, "unscramble-values.json")));
     }
-    private JsonObject translations(Class<?> clazz){
-        return TranslationGsonHelper.getDefaults(clazz, MiniMessage.miniMessage(), gson);
+    private @NotNull JsonObject translations(Class<?> clazz){
+        return getDefaults(clazz, MiniMessage.miniMessage(), gson);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class GenerateChatGames implements Generate {
         return gson;
     }
 
-    public JsonArray asArray(List<?> list, Gson gson){
+    public JsonArray asArray(@NotNull List<?> list, Gson gson){
         JsonArray jsonArray = new JsonArray();
         for (Object object : list){
             jsonArray.add(gson.toJsonTree(object));
@@ -53,7 +54,7 @@ public class GenerateChatGames implements Generate {
         return jsonArray;
     }
 
-    private List<TrueOrFalseChatGame.Statement> createStatements(){
+    private @NotNull List<TrueOrFalseChatGame.Statement> createStatements(){
         List<TrueOrFalseChatGame.Statement> statements = new LinkedList<>();
         for (Field field : TrueOrFalseTranslations.class.getFields()){
             if (field.getName().startsWith("Q")) {
@@ -68,7 +69,7 @@ public class GenerateChatGames implements Generate {
 
         return statements;
     }
-    private List<String> createStrings(Class<?> clazz, String prefix){
+    private @NotNull List<String> createStrings(Class<?> clazz, String prefix){
         List<String> strings = new LinkedList<>();
         for (Field field : clazz.getFields()){
             if (field.getName().startsWith(prefix)) {

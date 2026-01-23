@@ -1,12 +1,10 @@
 package xyz.goldendupe.messenger;
 
-import bet.astral.messenger.v2.component.ComponentPart;
 import bet.astral.messenger.v2.component.ComponentType;
-import bet.astral.messenger.v2.translation.TranslationKey;
+import bet.astral.messenger.v2.translation.Translation;
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.title.Title;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -192,7 +190,7 @@ public class Translations {
 	public static final Translation COMMAND_MUTECHAT_MUTED = new Translation("commands.mutechat.muted").add(ComponentType.CHAT, text("<red>The chat has been muted!"));
 	public static final Translation COMMAND_MUTECHAT_BYPASS = new Translation("commands.mutechat.bypass").add(ComponentType.CHAT, text("<yellow>You have permission to bypass chat mute."));
 	public static final Translation LISTENER_MUTECHAT_MUTED = new Translation("listener.mutechat.muted").add(ComponentType.CHAT, text("<yellow>The chat is currently muted!."));
-	public static final Translation TIMED_MUTECHAT_REMINDER_1 = new Translation("timed.mutechat.second").add(ComponentType.ACTION_BAR, text("<red>The chat is currently muted!")).add(ComponentType.CHAT, text("Should work"));
+	public static final Translation TIMED_MUTECHAT_REMINDER_1 = new Translation("timed.mutechat.second").add(ComponentType.ACTION_BAR, text("<red>The chat is currently muted!"));
 	public static final Translation TIMED_MUTECHAT_REMINDER_30 = new Translation("timed.mutechat.half_minute").add(ComponentType.CHAT, text("<red>The chat is currently muted!"));
 
 	// Creative GUI
@@ -212,57 +210,5 @@ public class Translations {
 
 	public static Collection<Translation> translations(){
 		return translation.values();
-	}
-
-	public static class Message extends bet.astral.messenger.v2.translation.Translation.Message {
-		private final Map<ComponentType, ComponentPart> componentPart = new HashMap<>();
-		private final Translation translation;
-		public Message(Translation translation){
-            super(translation);
-            this.translation = translation;
-		}
-
-		public Message add(ComponentType componentType, Component component){
-			componentPart.put(componentType, ComponentPart.of(component));
-			return this;
-		}
-		public Message add(ComponentType componentType, Component component, Title.Times times){
-			componentPart.put(componentType, ComponentPart.title(component, times));
-			return this;
-		}
-
-		public boolean useObject(){
-			return componentPart.size()>1 || componentPart.get(ComponentType.CHAT)==null;
-		}
-
-		public Translation asTranslation(){
-			return translation;
-		}
-	}
-
-	public static class Translation extends bet.astral.messenger.v2.translation.Translation implements TranslationKey{
-		private final String key;
-		private final Message messages;
-
-		public Translation(String key) {
-            super(key);
-            translation.put(key, this);
-			this.key = key;
-			this.messages = new Message(this);
-		}
-
-		@Override
-		public @NotNull String getKey() {
-			return key;
-		}
-
-		public Translation add(ComponentType componentType, Component component){
-			messages.add(componentType, component);
-			return this;
-		}
-		public Translation add(ComponentType componentType, Component component, Title.Times times){
-			messages.add(componentType, times, component);
-			return this;
-		}
 	}
 }

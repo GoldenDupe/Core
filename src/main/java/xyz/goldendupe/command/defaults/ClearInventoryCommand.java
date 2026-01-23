@@ -1,5 +1,6 @@
 package xyz.goldendupe.command.defaults;
 
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.guiman.clickable.Clickable;
 import bet.astral.guiman.gui.InventoryGUI;
 import bet.astral.guiman.gui.builders.InventoryGUIBuilder;
@@ -19,7 +20,6 @@ import org.incendo.cloud.parser.flag.CommandFlag;
 import xyz.goldendupe.GoldenDupe;
 import bet.astral.cloudplusplus.annotations.Cloud;
 import xyz.goldendupe.GoldenDupeCommandRegister;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.command.cloud.GDCloudCommand;
 import xyz.goldendupe.messenger.Translations;
 import xyz.goldendupe.models.GDPlayer;

@@ -1,6 +1,7 @@
 package xyz.goldendupe;
 
 import bet.astral.chatgamecore.messenger.GameTranslations;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.messenger.v2.Messenger;
 import bet.astral.messenger.v2.component.ComponentType;
 import bet.astral.messenger.v2.placeholder.Placeholder;
@@ -25,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import xyz.goldendupe.chat.games.CopyFastestChatGame;
 import xyz.goldendupe.chat.games.TrueFalseChatGame;
 import xyz.goldendupe.chat.games.UnscrambleChatGame;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.datagen.GenerateChatGames;
 import xyz.goldendupe.datagen.GenerateMessages;
 import xyz.goldendupe.messenger.GoldenMessenger;
@@ -33,6 +33,7 @@ import xyz.goldendupe.messenger.Translations;
 import xyz.goldendupe.messenger.chat.game.CopyFastestTranslations;
 import xyz.goldendupe.messenger.chat.game.TrueOrFalseTranslations;
 import xyz.goldendupe.messenger.chat.game.UnscrambleTranslations;
+import xyz.goldendupe.perks.PerkTranslations;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -43,7 +44,7 @@ public class GoldenDupeBootstrap implements PluginBootstrap {
 	private ComponentLogger logger;
 	@Getter
 	private GoldenDupeCommandRegister commandRegister;
-	private boolean devServer = false;
+	private boolean devServer = true;
 	final GoldenMessenger messenger = new GoldenMessenger();
 	public List<InitAfterBootstrap> initAfterBootstraps = new LinkedList<>();
 	@Override
@@ -73,12 +74,16 @@ public class GoldenDupeBootstrap implements PluginBootstrap {
 			englishTable.addAdditionalLanguageSource(source(messenger, new File(chatGameFolder, "true-or-false-translations.json")));
 			englishTable.addAdditionalLanguageSource(source(messenger, new File(chatGameFolder, "unscramble-translations.json")));
 			englishTable.addAdditionalLanguageSource(source(messenger, new File(chatGameFolder, "type-fastest-translations.json")));
-			englishTable.addAdditionalLanguageSource(source(messenger, new File(chatGameFolder, "root.json")));
+			englishTable.addAdditionalLanguageSource(source(messenger, new File(chatGameFolder, "root-translations.json")));
+
+			// Load perk translations
+			englishTable.addAdditionalLanguageSource(source(messenger, new File(dataFolder, "perk-translations.json")));
 
 			messenger.setLocale(Locale.US);
 			messenger.setDefaultLocale(englishSource);
 			messenger.registerLanguageTable(Locale.US, englishTable);
 			messenger.setUseReceiverLocale(false);
+			messenger.setSendTranslationKey(true); // Send translation key, easier to debug and notice mistakes
 			messenger.setSendASync(true);
 			messenger.setPrefix(prefix);
 			messenger.enablePrefix();
@@ -89,6 +94,8 @@ public class GoldenDupeBootstrap implements PluginBootstrap {
 			messenger.loadTranslations(TrueOrFalseTranslations.class);
 			messenger.loadTranslations(UnscrambleTranslations.class);
 			messenger.loadTranslations(CopyFastestTranslations.class);
+			// Load perk translations
+			messenger.loadTranslations(PerkTranslations.class);
 
 //			messenger.message(messenger.console(), Translations.MESSENGER_TEST);
 		} catch (IOException e) {

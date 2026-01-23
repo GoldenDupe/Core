@@ -1,6 +1,7 @@
 package xyz.goldendupe.command.cloud;
 
 import bet.astral.cloudplusplus.command.CPPCommand;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.incendo.cloud.Command;
@@ -8,7 +9,6 @@ import org.incendo.cloud.description.Description;
 import org.incendo.cloud.paper.PaperCommandManager;
 import xyz.goldendupe.GoldenDupe;
 import xyz.goldendupe.GoldenDupeCommandRegister;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.messenger.GoldenMessenger;
 
 public class GDCloudCommand extends CPPCommand<CommandSender> {

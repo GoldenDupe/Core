@@ -1,6 +1,7 @@
 package xyz.goldendupe.command.defaults;
 
 import bet.astral.cloudplusplus.annotations.Cloud;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.messenger.v2.placeholder.Placeholder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -23,7 +24,6 @@ import org.incendo.cloud.paper.PaperCommandManager;
 import org.incendo.cloud.parser.standard.IntegerParser;
 import org.jetbrains.annotations.NotNull;
 import xyz.goldendupe.GoldenDupeCommandRegister;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.command.cloud.GDCloudCommand;
 import xyz.goldendupe.messenger.Translations;
 import xyz.goldendupe.models.GDSavedData;

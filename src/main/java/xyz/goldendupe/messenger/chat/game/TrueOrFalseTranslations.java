@@ -37,9 +37,10 @@ public class TrueOrFalseTranslations {
 
     @Getter
     public static class Statement extends Translation {
-        private boolean isTrue;
+        private final boolean isTrue;
         public Statement(boolean isTrue, String key, String value) {
             super(key);
+            this.isTrue = isTrue;
             add(ComponentType.CHAT, text(value));
         }
 

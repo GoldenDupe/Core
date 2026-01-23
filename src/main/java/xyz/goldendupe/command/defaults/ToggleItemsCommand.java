@@ -11,6 +11,7 @@ import xyz.goldendupe.messenger.Translations;
 import xyz.goldendupe.models.GDPlayer;
 import xyz.goldendupe.utils.MemberType;
 
+// TODO - > Add switch so items drop to ground even if player has space in inventory
 @Cloud
 public class ToggleItemsCommand extends GDCloudCommand {
 	public static final int RANDOM_ITEM_TICKS = 20*15; // 20 ticks * 15 seconds

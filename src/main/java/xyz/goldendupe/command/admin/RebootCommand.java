@@ -76,7 +76,7 @@ public class RebootCommand extends GDCloudCommand {
                             Bukkit.broadcast(Component.text("Server Restarting!"));
                             rebootTimer.reset();
                             goldenDupe().onRestart();
-                            Bukkit.spigot().restart();
+                            Bukkit.restart();
                         }
 
                     }, 0, 20);

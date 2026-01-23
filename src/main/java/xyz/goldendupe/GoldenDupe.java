@@ -1,8 +1,10 @@
 package xyz.goldendupe;
 
 import bet.astral.chatgamecore.dispatcher.ChatEventDispatcher;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.fusionflare.FusionFlare;
 import bet.astral.guiman.GUIMan;
+import bet.astral.guiman.gui.builders.InventoryGUIBuilder;
 import bet.astral.messenger.v2.source.LanguageTable;
 import bet.astral.messenger.v2.source.source.LanguageSource;
 import bet.astral.messenger.v2.translation.TranslationKeyRegistry;
@@ -40,7 +42,6 @@ import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 
 import xyz.goldendupe.chat.games.*;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.command.defaults.ToggleItemsCommand;
 import xyz.goldendupe.database.PlayerDatabase;
 import xyz.goldendupe.database.SpawnDatabase;
@@ -56,6 +57,7 @@ import xyz.goldendupe.models.GDPlayer;
 import xyz.goldendupe.models.impl.GDHome;
 import xyz.goldendupe.models.serializer.GlobalSaveSerializer;
 import xyz.goldendupe.models.serializer.SettingsSerializer;
+import xyz.goldendupe.pets.GDActionManager;
 import xyz.goldendupe.scoreboard.Scoreboard;
 import xyz.goldendupe.utils.MemberType;
 import xyz.goldendupe.utils.Seasons;
@@ -107,6 +109,10 @@ public final class GoldenDupe extends JavaPlugin {
     private final Timer startTimer = new Timer();
     private List<InitAfterBootstrap> initAfterBootstraps;
 
+    // Action manager
+    @Getter
+    private GDActionManager actionManager = new GDActionManager(this);
+
     public GoldenDupe(GoldenDupeBootstrap boostrap) {
         this.isDevelopmentServer = boostrap.getCommandRegister().isDebug();
         initAfterBootstraps = boostrap.initAfterBootstraps;
@@ -130,6 +136,9 @@ public final class GoldenDupe extends JavaPlugin {
         instance = this;
         PaperMessenger.init(this);
         GUIMan.init(this);
+        // Disable throwing of exception in the builder to enable legacy titles
+        InventoryGUIBuilder.throwExceptionIfMessengerNull = false;
+
         chatEventDispatcher.registerListeners(this);
         CopyFastestChatGame.register(chatEventDispatcher);
         MathChatGame.register(chatEventDispatcher);
@@ -193,6 +202,8 @@ public final class GoldenDupe extends JavaPlugin {
             luckPerms = LuckPermsProvider.get();
         }
 
+        actionManager.init();
+
 
         // config.yml
         reloadConfig();
@@ -217,10 +228,8 @@ public final class GoldenDupe extends JavaPlugin {
                     continue;
                 }
                 if (gdPlayer.isToggleRandomItems()) {
-                    // Random items from this list will randomized, but they will have empty NBT
-                    ItemStack itemStack = settings.getRandomItemData().getAllowedItems().get(random.nextInt(settings.getRandomItemData().getAllowedItems().size()));
-                    // using patchRandomItem randomizes it, if it can be randomized even more
-                    itemStack = settings.patchRandomItem(itemStack, random);
+                    // Generate random item and add 1 to global items generated & player items generated
+                    ItemStack itemStack = generateRandomItem(player);
 
                     // Adding the items to a map allows checking if player could actually hold the item
                     Map<Integer, ItemStack> items = player.getInventory().addItem(itemStack);
@@ -234,8 +243,6 @@ public final class GoldenDupe extends JavaPlugin {
                             });
                         }
                     }
-                    gdPlayer.setGeneratedRandomItems(gdPlayer.getGeneratedRandomItems() + 1);
-                    savedData.setItemsGenerated(savedData.getItemsGenerated() + 1);
                 }
 
 
@@ -254,21 +261,41 @@ public final class GoldenDupe extends JavaPlugin {
         getServer().getAsyncScheduler().runAtFixedRate(this, (t) -> {
             if (getSettings().isGlobalChatMute()) {
                 messenger().broadcast(Permission.of(MemberType.MODERATOR.permissionOf("mutechat")), Translations.TIMED_MUTECHAT_REMINDER_1);
-                Bukkit.broadcast(Component.text("True"));
             }
-        }, 100, 1, TimeUnit.SECONDS);
+        }, 100, 1, TimeUnit.MINUTES);
         getServer().getAsyncScheduler().runAtFixedRate(this, (t) -> {
             if (getSettings().isGlobalChatMute()) {
-                messenger().broadcast(Permission.of(MemberType.MODERATOR.permissionOf("mutechat")), Translations.TIMED_MUTECHAT_REMINDER_30);
+                messenger().broadcast(Translations.TIMED_MUTECHAT_REMINDER_30);
             }
         }, 100, 30, TimeUnit.SECONDS);
         getServer().getAsyncScheduler().runAtFixedRate(this, (t) -> {
             Scoreboard.tickGlobal();
         }, 100, 50, TimeUnit.MILLISECONDS);
+        // Save all every player every 5 minutes to be sure data is saved !
+        getServer().getScheduler().runTaskTimer(this, () -> {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                playerDatabase.save(playerDatabase.fromPlayer(player));
+            });
+        }, 0, 6000);
 
 
         fusionFlare.ready();
         getComponentLogger().info("GoldenDupe has enabled!");
+    }
+
+    /**
+     * Generates a random item
+     */
+    public ItemStack generateRandomItem(Player player) {
+        // Random items from this list will randomized, but they will have empty NBT
+        ItemStack itemStack = settings.getRandomItemData().getAllowedItems().get(random.nextInt(settings.getRandomItemData().getAllowedItems().size()));
+        // using patchRandomItem randomizes it, if it can be randomized even more
+        itemStack = settings.patchRandomItem(itemStack, random);
+        savedData.setItemsGenerated(savedData.getItemsGenerated() + 1);
+        GDPlayer gdPlayer = playerDatabase.fromPlayer(player);
+        gdPlayer.setGeneratedRandomItems(gdPlayer.getGeneratedRandomItems() + 1);
+
+        return itemStack;
     }
 
     public void onRestart() {
@@ -535,6 +562,7 @@ public final class GoldenDupe extends JavaPlugin {
                     });
         }
     }
+
 }
 
 

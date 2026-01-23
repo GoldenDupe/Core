@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import xyz.goldendupe.GoldenDupe;
 import xyz.goldendupe.utils.MemberType;
@@ -149,13 +150,19 @@ public class GDSettings {
 			types.removeAll(List.of(PotionType.MUNDANE, PotionType.LUCK, PotionType.THICK, PotionType.WATER));
 			PotionType type = types.get(random.nextInt(0, types.size()-1));
 			potionMeta.setBasePotionType(type);
-			potionMeta.setColor(Registry.POTION_EFFECT_TYPE.get(type.getKey()).getColor());
+			PotionEffectType potionEffectType = Registry.POTION_EFFECT_TYPE.get(type.getKey());
+			if (potionEffectType != null){
+				potionMeta.setColor(potionEffectType.getColor());
+			}
 		} else if (randomItemData.allowUpdatedPotions && meta instanceof PotionMeta potionMeta) {
 			List<PotionType> types = new ArrayList<>(Registry.POTION.stream().toList());
 			types.removeAll(List.of(PotionType.MUNDANE, PotionType.LUCK, PotionType.THICK, PotionType.WATER));
 			PotionType type = types.get(random.nextInt(0, types.size()-1));
 			potionMeta.setBasePotionType(type);
-			potionMeta.setColor(Registry.POTION_EFFECT_TYPE.get(type.getKey()).getColor());
+			PotionEffectType potionEffectType = Registry.POTION_EFFECT_TYPE.get(type.getKey());
+			if (potionEffectType != null){
+				potionMeta.setColor(potionEffectType.getColor());
+			}
 		} else if (randomItemData.allowUpdateOminousBottles && meta instanceof OminousBottleMeta ominousBottleMeta){
 			int tier = random.nextInt(1, randomItemData.getMaxOminousTier());
 			ominousBottleMeta.setAmplifier(tier);
@@ -215,8 +222,7 @@ public class GDSettings {
 
 			Registry<Material> materials = Registry.MATERIAL;
 			World world = Bukkit.getWorlds().getFirst();
-			@SuppressWarnings("removal")
-            List<ItemStack> items = materials.stream().filter(material-> !illegalsItems.contains(material)).filter(material->material.isEnabledByFeature(world)).filter(Material::isItem).map(ItemStack::new).toList();
+            List<ItemStack> items = materials.stream().filter(material-> !illegalsItems.contains(material)).filter(Material::isItem).map(ItemStack::new).toList();
 			allowedItems = ImmutableList.copyOf(items);
 		}
 

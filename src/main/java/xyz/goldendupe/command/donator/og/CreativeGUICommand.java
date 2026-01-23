@@ -1,6 +1,7 @@
 package xyz.goldendupe.command.donator.og;
 
 import bet.astral.cloudplusplus.annotations.Cloud;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.guiman.background.Background;
 import bet.astral.guiman.clickable.Clickable;
 import bet.astral.guiman.gui.InventoryGUI;
@@ -22,7 +23,6 @@ import org.incendo.cloud.paper.PaperCommandManager;
 import org.jetbrains.annotations.NotNull;
 import xyz.goldendupe.GoldenDupe;
 import xyz.goldendupe.GoldenDupeCommandRegister;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.command.cloud.GDCloudCommand;
 import xyz.goldendupe.messenger.GoldenMessenger;
 import xyz.goldendupe.messenger.Translations;
@@ -78,7 +78,7 @@ public class CreativeGUICommand extends GDCloudCommand implements InitAfterBoots
 		}).actionGeneral((action) ->
 				action.getWho().closeInventory(InventoryCloseEvent.Reason.PLAYER)));
 		builder.title(Translations.GUI_CREATIVE_TITLE);
-		builder.placeholderGenerator(_ -> PlaceholderCollection.list(Placeholder.of("page", page+1), Placeholder.of("max_page", maxPages)));
+		builder.placeholderGenerator(P -> PlaceholderCollection.list(Placeholder.of("page", page+1), Placeholder.of("max_page", maxPages)));
         return builder.messenger(goldenDupe().messenger()).build();
 	}
 

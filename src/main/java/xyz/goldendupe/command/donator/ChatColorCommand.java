@@ -1,6 +1,7 @@
 package xyz.goldendupe.command.donator;
 
 import bet.astral.cloudplusplus.annotations.Cloud;
+import bet.astral.cloudplusplus.minecraft.paper.bootstrap.InitAfterBootstrap;
 import bet.astral.guiman.background.Background;
 import bet.astral.guiman.clickable.Clickable;
 import bet.astral.guiman.clickable.ClickableBuilder;
@@ -28,7 +29,6 @@ import org.incendo.cloud.Command;
 import org.incendo.cloud.description.Description;
 import org.incendo.cloud.paper.PaperCommandManager;
 import xyz.goldendupe.GoldenDupeCommandRegister;
-import xyz.goldendupe.command.bootstrap.InitAfterBootstrap;
 import xyz.goldendupe.command.cloud.GDCloudCommand;
 import xyz.goldendupe.models.GDPlayer;
 import xyz.goldendupe.models.chatcolor.Color;
@@ -452,7 +452,7 @@ public class ChatColorCommand extends GDCloudCommand implements InitAfterBootstr
 				}).permission(MemberType.DONATOR.permissionOf("chatcolor.format.strikethrough"))
 				.build();
 
-		ClickableProvider strikethrough = (p) -> Clickable.builder(Material.CHAIN, meta -> {
+		ClickableProvider strikethrough = (p) -> Clickable.builder(Material.IRON_CHAIN, meta -> {
 					GDPlayer playerProfile = goldenDupe().playerDatabase().fromPlayer(p);
 					meta.displayName(Component.text("Strikethrough", YELLOW, TextDecoration.STRIKETHROUGH).decoration(TextDecoration.ITALIC, false));
 					meta.lore(List.of(Component.text("Click to " + ((playerProfile.color().underlined()) ? "disable" : "enable") + " strikethrough messages", YELLOW).decoration(TextDecoration.ITALIC, false)));

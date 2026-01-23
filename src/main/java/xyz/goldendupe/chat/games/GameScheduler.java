@@ -21,6 +21,9 @@ public class GameScheduler {
     }
 
     public void run(){
+        if (true){
+            return;
+        }
         goldenDupe.getServer().getAsyncScheduler().runAtFixedRate(goldenDupe, t->{
             untilNextGame--;
             if (untilNextGame<=0) {

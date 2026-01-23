@@ -31,6 +31,7 @@ public class DefaultScoreboard extends Scoreboard implements ScoreboardSection {
         builder.addStaticLine(of(gold("You"), gray(" (" + player.getName() + ")", TextDecoration.ITALIC)))
                 .addDynamicLine(() -> of(gray(" Rank: "), prefix(player)))
                 .addDynamicLine(() -> of(gray(" Ping: "), Ping.defaultPing.format(player.getPing())))
+                .addDynamicLine(() -> of(gray(" Balance: "), balance(player)))
                 .addBlankLine()
                 .addStaticLine(of(gold("Server", BOLD)))
                 .addDynamicLine(() -> of(gray(" TPS: "), tps()))
@@ -45,7 +46,6 @@ public class DefaultScoreboard extends Scoreboard implements ScoreboardSection {
         ));
         getLayout().apply(getSidebar());
     }
-
 
     public Component tps() {
         if (GoldenDupe.spark == null) {

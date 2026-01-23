@@ -51,19 +51,19 @@ public class ToggleListeners implements GDListener {
 				if (hand==EquipmentSlot.OFF_HAND){
 					if (itemStack.getAmount()>1){
 						event.getPlayer().getScheduler()
-								.runDelayed(goldenDupe, _ -> event.getPlayer().getInventory().removeItem(ItemStack.of(Material.GLASS_BOTTLE)), null, 1);
+								.runDelayed(goldenDupe, P -> event.getPlayer().getInventory().removeItem(ItemStack.of(Material.GLASS_BOTTLE)), null, 1);
 					} else {
 						event.getPlayer().getScheduler()
-								.runDelayed(goldenDupe, _ -> event.getPlayer().getInventory().setItem(hand, ItemStack.empty()), null, 1);
+								.runDelayed(goldenDupe, P -> event.getPlayer().getInventory().setItem(hand, ItemStack.empty()), null, 1);
 					}
 				} else {
 					int slot = ePlayer.getInventory().getHeldItemSlot();
 					if (itemStack.getAmount()>1){
 						event.getPlayer().getScheduler()
-								.runDelayed(goldenDupe, _ -> event.getPlayer().getInventory().removeItem(ItemStack.of(Material.GLASS_BOTTLE)), null, 1);
+								.runDelayed(goldenDupe, P -> event.getPlayer().getInventory().removeItem(ItemStack.of(Material.GLASS_BOTTLE)), null, 1);
 					} else {
 						event.getPlayer().getScheduler()
-								.runDelayed(goldenDupe, _ -> event.getPlayer().getInventory().setItem(slot, ItemStack.empty()), null, 1);
+								.runDelayed(goldenDupe, P -> event.getPlayer().getInventory().setItem(slot, ItemStack.empty()), null, 1);
 					}
 				}
 			}
